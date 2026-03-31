@@ -191,7 +191,7 @@ Not every search result is a product page. The pipeline filters out URLs matchin
 
 ## Why base64 images?
 
-Product images are hosted on retailer CDNs (Shopify, Zara's static servers, etc.) that set restrictive CORS and hotlinking headers. When the mood board HTML renders inside a sandboxed environment like a Claude artifact, an iframe, or even some email clients, external image requests get blocked silently and the cards show up empty.
+Product images are hosted on retailer CDNs (Shopify and other large fashion retailers’ static servers, etc.) that set restrictive CORS and hotlinking headers. When the mood board HTML renders inside a sandboxed environment like a Claude artifact, an iframe, or even some email clients, external image requests get blocked silently and the cards show up empty.
 
 The `fetch_images.py` script solves this by routing image downloads through Zyte API (which handles anti-bot protection and CDN access), then encoding each image as a base64 data URI directly in the HTML. The tradeoff is file size: a mood board with 7 products runs about 750KB instead of 5KB. But it works everywhere, every time, with zero broken images.
 

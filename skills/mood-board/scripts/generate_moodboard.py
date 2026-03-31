@@ -7,6 +7,7 @@ Usage:
 """
 
 import json
+import re
 import sys
 from datetime import datetime
 
@@ -32,14 +33,22 @@ def generate(query: str, products: list) -> str:
         brand = p.get("brand", "")
         url = p.get("url", "#")
 
-        label = brand if brand else color
+        # Redact retailer names that shouldn't appear in screenshots.
+        # (Currently focuses on "Zara" as requested.)
+        name_display = re.sub(r"(?i)\bZara\b", "", name).replace("  ", " ").strip()
+        if not name_display:
+            name_display = name
+
+        # Do not display retailer brand names in the mood board (privacy/screenshot-friendly).
+        # Prefer a neutral label derived from color, otherwise fall back to a generic value.
+        label = (color if color else "Style")
         cards += f"""
     <div class="card">
-      <img class="card-img" src="{image}" alt="{name}"
+      <img class="card-img" src="{image}" alt="{name_display}"
            onerror="this.style.display='none'">
       <div class="card-body">
         <div class="card-label">{label}</div>
-        <div class="card-name">{name}</div>
+        <div class="card-name">{name_display}</div>
         <div class="card-price">{price_str}</div>
       </div>
       <a class="card-link" href="{url}" target="_blank" rel="noopener">Shop Now</a>
