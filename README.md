@@ -1,3 +1,7 @@
+> **📦 This project has moved.** The canonical version now lives at
+> [zytelabs/claude-webscraping-skills/mood-board-skill](https://github.com/zytelabs/claude-webscraping-skills/tree/main/mood-board-skill).
+> This repository is kept as an archive of the original work.
+
 # Mood Board Generator
 
 **Drop an image. Get a shoppable mood board.**
